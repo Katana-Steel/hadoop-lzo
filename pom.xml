@@ -88,7 +88,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hadoop.current.version>2.6.4</hadoop.current.version>
+    <hadoop.current.version>3.3.4</hadoop.current.version>
     <hadoop.old.version>1.0.4</hadoop.old.version>
   </properties>
 
@@ -141,8 +141,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
         </configuration>
@@ -311,13 +311,12 @@
                 <mkdir dir="${build.native.target}/lib"/>
                 <mkdir dir="${build.native}/src/com/hadoop/compression/lzo"/>
 
-                <javah classpath="${build.classes}"
+                <javac classpath="${build.classes}"
+                    srcdir="src/main/java/com/hadoop/compression/lzo"
                     destdir="${build.native}/src/com/hadoop/compression/lzo"
-                    force="yes"
+                    nativeheaderdir="${build.native}/src/com/hadoop/compression/lzo"
                     verbose="yes">
-                  <class name="com.hadoop.compression.lzo.LzoCompressor" />
-                  <class name="com.hadoop.compression.lzo.LzoDecompressor" />
-                </javah>
+                </javac>
 
                 <exec dir="${build.native}" executable="sh" failonerror="true">
                   <env key="OS_NAME" value="${os.name}"/>
@@ -359,13 +358,12 @@
                 <mkdir dir="${build.native.target}/lib"/>
                 <mkdir dir="${build.native}/src/com/hadoop/compression/lzo"/>
 
-                <javah classpath="${build.classes}"
+                <javac classpath="${build.classes}"
+                    srcdir="src/main/java/com/hadoop/compression/lzo"
                     destdir="${build.native}/src/com/hadoop/compression/lzo"
-                    force="yes"
+                    nativeheaderdir="${build.native}/src/com/hadoop/compression/lzo"
                     verbose="yes">
-                  <class name="com.hadoop.compression.lzo.LzoCompressor" />
-                  <class name="com.hadoop.compression.lzo.LzoDecompressor" />
-                </javah>
+                </javac>
 
                 <exec dir="${build.native}" executable="msbuild" failonerror="true">
                   <arg value="${basedir}/src/main/native/gplcompression.sln" />
@@ -402,13 +400,6 @@
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>1.10.9</version>
-          </dependency>
-          <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>tools</artifactId>
-            <version>1.6</version>
-            <scope>system</scope>
-            <systemPath>${java.home}/../lib/tools.jar</systemPath>
           </dependency>
         </dependencies>
       </plugin>
@@ -484,7 +475,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.7</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
